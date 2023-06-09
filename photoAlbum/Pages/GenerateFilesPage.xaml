@@ -1,0 +1,195 @@
+﻿<UserControl x:Class="photoAlbum.Pages.GenerateFilesPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:l="clr-namespace:SearchTextBox;assembly=SearchTextBox"
+             xmlns:vm="clr-namespace:photoAlbum.ViewModels"
+             xmlns:local="clr-namespace:photoAlbum.Pages"
+            Height="600" Width="1030">
+    <UserControl.DataContext>
+        <vm:CreateFilesPageVM/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/photoAlbum;component/Resources/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="/photoAlbum;component/Resources/FancyListViewStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                <GradientStop Color="#336099" Offset="0.0"/>
+                <GradientStop Color="#396D90" Offset="0.25"/>
+                <GradientStop Color="#3F7A90" Offset="0.75"/>
+                <GradientStop Color="#43829E" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.Effect>
+            <DropShadowEffect />
+        </Grid.Effect>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" 
+              Margin="3" 
+              Background="#336089">
+            <!--<l:SearchTextBox Name="txtsearch"
+                             CharacterCasing="Upper"
+                             Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             HorizontalContentAlignment="Left" 
+                             Margin="772,7,12,8"/>-->
+        </Grid>
+        <Grid Grid.Row="1" Margin="3">
+            <ListView Name="lv_Data" 
+                      ItemsSource="{Binding FinCollection}"
+                      GridViewColumnHeader.Click="lv_Data_Click"
+                      HorizontalAlignment="Stretch"  
+                      Margin="8,6,7.333,1.667" 
+                      VerticalAlignment="Stretch" 
+                      FontFamily="Lato" 
+                      FontSize="12" 
+                      Padding="0,2,0,0"
+                      BorderBrush="#3C3B3B" 
+                      BorderThickness="2"
+                      Foreground="#FF001E33" 
+                      Background="#FFF2F2F2" 
+                      ItemContainerStyle="{StaticResource alternatingStyle}"
+                      AlternationCount="2">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    </Style>
+                </ListView.Resources>
+                <ListView.View >
+                    <GridView ColumnHeaderContainerStyle="{StaticResource CustomHeaderStyle}">
+                        <GridViewColumn Header="School" Width="100" DisplayMemberBinding="{Binding state_name}" />
+                        <GridViewColumn Header="School Name" Width="420" DisplayMemberBinding="{Binding sch_name}" />
+                        
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        <Grid Grid.Row="2"  Margin="2">
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Right" 
+                        Margin="0,0,5,0">
+                <Button Name="btnRefresh" 
+                        Content="Refresh" 
+                        Margin="3,4,3,10" 
+                        Height="42"  
+                        Width="136"
+                        FontSize="18" 
+                        Style="{StaticResource AButtonStyle}"     
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Stretch"  
+                        VerticalContentAlignment="Center" 
+                        HorizontalContentAlignment="Center" 
+                        Command="{Binding RefreshCommand}"  >
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource FancyToolTip}" Content=" Reload data "/>
+                    </Button.ToolTip>
+                </Button>
+                <Button Name="btnFirst" 
+                        Margin="3,4,3,0" 
+                        Height="42"  
+                        Width="55"
+                        FontSize="18" 
+                        Style="{StaticResource AButtonStyle}"     
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Stretch"  
+                        VerticalContentAlignment="Center" 
+                        HorizontalContentAlignment="Center" 
+                        Command="{Binding FirstCommand}" >
+                    <Path Fill="#F9F7F7" Data="{StaticResource LeftDoubleArrow}"/>
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource FancyToolTip}" Content=" First Page"/>
+                    </Button.ToolTip>
+                </Button>
+                <Button Name="btnPrevious" 
+                        Margin="3,4,3,0" 
+                        Height="42"  
+                        Width="55"
+                        FontSize="18" 
+                        Style="{StaticResource AButtonStyle}"     
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Stretch"  
+                        VerticalContentAlignment="Center" 
+                        HorizontalContentAlignment="Center" 
+                        Command="{Binding PreviousCommand}" >
+                    <Path Fill="#F9F7F7" Data="{StaticResource LeftArrow}"/>
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource FancyToolTip}" Content=" Previous Page"/>
+                    </Button.ToolTip>
+                </Button>
+                <Button Name="btnNext" 
+                        Margin="3,4,3,0" 
+                        Height="42"  
+                        Width="56"
+                        FontSize="18" 
+                        Style="{StaticResource AButtonStyle}"     
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Stretch"  
+                        VerticalContentAlignment="Center" 
+                        HorizontalContentAlignment="Center" 
+                        Command="{Binding NextCommand}" >
+                    <Path Fill="#F9F7F7" Data="{StaticResource RightArrow}"/>
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource FancyToolTip}" Content=" Next Page"/>
+                    </Button.ToolTip>
+                </Button>
+                <Button Name="btnLast" 
+                        Margin="3,4,3,0" 
+                        Height="42"  
+                        Width="55"
+                        FontSize="18" 
+                        Style="{StaticResource AButtonStyle}"     
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Stretch"  
+                        VerticalContentAlignment="Center" 
+                        HorizontalContentAlignment="Center" 
+                        Command="{Binding LastCommand}" >
+                    <Path Fill="#F9F7F7" Data="{StaticResource RightDoubleArrow}"/>
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource FancyToolTip}" Content=" Last Page"/>
+                    </Button.ToolTip>
+                </Button>
+                <Button Content="Print" 
+                        Margin="3,4,3,10" 
+                        Height="42"  
+                        Width="118"
+                        FontSize="18" 
+                        Style="{StaticResource AButtonStyle}"     
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Stretch"  
+                        VerticalContentAlignment="Center" 
+                        HorizontalContentAlignment="Center" 
+                        Command="{Binding PrintCommand}">
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource FancyToolTip}" Content=" Download Assessements "/>
+                    </Button.ToolTip>
+                </Button>
+                <Button Name="btnClose" 
+                        Content="Close" 
+                        Margin="3,1,3,7" 
+                        Height="42"  
+                        Width="136"
+                        FontSize="18" 
+                        Style="{StaticResource CButtonStyle}"     
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Stretch"  
+                        VerticalContentAlignment="Center" 
+                        HorizontalContentAlignment="Center" 
+                        Command="{Binding CloseCommand}"  >
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource FancyToolTip}" Content=" Cancel the operation and close form"/>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
