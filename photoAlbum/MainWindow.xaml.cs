@@ -160,5 +160,47 @@ namespace photoAlbum
         {
             SafeGuiWpf.AddUserControlToGrid<SchoolListPage>(content);
         }
+
+        private void BtnPictFolder1_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog openFileDlg = new System.Windows.Forms.FolderBrowserDialog()
+            {
+                Description = "Default Image Folder"
+            };
+            var result = openFileDlg.ShowDialog();
+            if (result.ToString() != string.Empty)
+            {
+                EntryPoint.PictureFilesFolder = openFileDlg.SelectedPath;
+                //EntryPoint.PictureFilesFolder = EntryPoint.DataBasePath;
+            }
+        }
+
+        private void BtnPictFolder2_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog openFileDlg = new System.Windows.Forms.FolderBrowserDialog()
+            {
+                Description = "Second Image Folder"
+            };
+            var result = openFileDlg.ShowDialog();
+            if (result.ToString() != string.Empty)
+            {
+                EntryPoint.PictureFilesFolder1 = openFileDlg.SelectedPath;
+                //EntryPoint.PictureFilesFolder = EntryPoint.DataBasePath;
+            }
+        }
+
+        private void BtnPictFolder3_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog openFileDlg = new System.Windows.Forms.FolderBrowserDialog()
+            {
+                Description = "Image Folder 3"
+            };
+            var result = openFileDlg.ShowDialog();
+            if (result.ToString() != string.Empty)
+            {
+                EntryPoint.PictureFilesFolder2 = openFileDlg.SelectedPath;
+                //EntryPoint.PictureFilesFolder = EntryPoint.DataBasePath;
+            }
+        }
     }
 }

@@ -213,7 +213,7 @@ namespace photoAlbum.ViewModels
                     //await Task.Run(() => search.SearchByName(string a);
                     //PrintToPdf.ProgressChanged -= UpdateValueInProgressBar();
                     var schools = SelectedFin.Select(x => x.schnum).ToList();
-                    await PrintToPdf.GeneratePdf(SelectedState.Name, schools);
+                    await GeneratePdf(SelectedState.Name, schools);
                     //foreach (var p in SelectedFin)
                     //{
                     //    //await GenerateFiles.GenerateBySchool(p.schnum);
@@ -224,6 +224,42 @@ namespace photoAlbum.ViewModels
                     
                 });
             }
+        }
+
+
+
+        private async Task GeneratePdf(string state, List<string> schnum)
+        {
+            if (SelectedState == null)
+            {
+                SafeGuiWpf.ShowError("Please select state");
+                return;
+            }
+
+            if (SelectedState.Name == null)
+            {
+                SafeGuiWpf.ShowError("Please select state");
+                return;
+            }
+
+            if (!schnum.Any())
+            {
+                SafeGuiWpf.ShowError("Please select school");
+                return;
+            }
+
+            LongActionDialog.ShowDialog("Generating pdf... ", Task.Run(async () =>
+            {
+
+                foreach (var p in SelectedFin)
+                {
+                    await PrintToPdf.GeneratePdf(state, schnum);
+
+                }
+            }));
+            //RefreshAsync();
+            SelectedFin.Clear();
+            await Task.CompletedTask;
         }
 
         public ICommand PrintAllCommand
@@ -249,11 +285,47 @@ namespace photoAlbum.ViewModels
                 return new Command(async (object e) =>
                 {
                     var model = e as FinModel;
-                    await PrintToPdf.GeneratePdf(SelectedState.Name, model.schnum);
+                    await GeneratePdf(SelectedState.Name, model.schnum);
                     //await GenerateFiles.GenerateBySchool(model.schnum);
                 });
             }
         }
+
+
+        private async Task GeneratePdf(string state, string schnum)
+        {
+            if (SelectedState == null)
+            {
+                SafeGuiWpf.ShowError("Please select state");
+                return;
+            }
+
+            if (SelectedState.Name == null)
+            {
+                SafeGuiWpf.ShowError("Please select state");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(schnum))
+            {
+                SafeGuiWpf.ShowError("Please select school");
+                return;
+            }
+
+            LongActionDialog.ShowDialog("Generating pdf... ", Task.Run(async () =>
+            {
+
+                foreach (var p in SelectedFin)
+                {
+                    await PrintToPdf.GeneratePdf(state, schnum);
+
+                }
+            }));
+            //RefreshAsync();
+            //SelectedFin.Clear();
+            await Task.CompletedTask;
+        }
+
 
         public ICommand CloseCommand
         {

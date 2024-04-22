@@ -40,5 +40,10 @@ namespace photoAlbum.Pages
         {
             clv.Click(this, sender, e);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -261,7 +261,9 @@ namespace photoAlbum.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// Selects the schools to be generated for
+        /// </summary>
         public ICommand SelectFinCommand
         {
             get
@@ -291,6 +293,10 @@ namespace photoAlbum.ViewModels
         }
 
 
+        /// <summary>
+        /// Genertes adb files for selecte schools
+        /// </summary>
+        /// <returns></returns>
         private async Task GenerateSelected()
         {
             if(SelectedFin == null)
@@ -298,6 +304,13 @@ namespace photoAlbum.ViewModels
                 SafeGuiWpf.ShowError("Please select schools");
                 return;
             }
+
+            if (!SelectedFin.Any())
+            {
+                SafeGuiWpf.ShowError("Please select schools");
+                return;
+            }
+
             LongActionDialog.ShowDialog("Generating ... ", Task.Run(async () =>
             {
 
@@ -311,6 +324,10 @@ namespace photoAlbum.ViewModels
             SelectedFin.Clear();
             await Task.CompletedTask;
         }
+
+        /// <summary>
+        /// Generates alb files by states
+        /// </summary>
         public ICommand GenerateCommand
         {
             get
@@ -327,6 +344,9 @@ namespace photoAlbum.ViewModels
             }
         }
 
+        /// <summary>
+        /// Generates file for single school
+        /// </summary>
         public ICommand LVGenerateCommand
         {
             get
@@ -334,9 +354,38 @@ namespace photoAlbum.ViewModels
                 return new Command(async(object e) =>
                 {
                     var model = e as FinModel;
-                    await GenerateFiles.GenerateBySchool(model.schnum);
+                    await GenerateBySchool(model.schnum);
                 });
             }
+        }
+
+
+        private async Task GenerateBySchool(string schnum)
+        {
+            if (SelectedFin == null)
+            {
+                SafeGuiWpf.ShowError("Please select schools");
+                return;
+            }
+
+            if (!SelectedFin.Any())
+            {
+                SafeGuiWpf.ShowError("Please select schools");
+                return;
+            }
+
+            LongActionDialog.ShowDialog("Generating ... ", Task.Run(async () =>
+            {
+
+                foreach (var p in SelectedFin)
+                {
+                    await GenerateFiles.GenerateBySchool(schnum);
+
+                }
+            }));
+            //RefreshAsync();
+            SelectedFin.Clear();
+            await Task.CompletedTask;
         }
 
         public ICommand CloseCommand

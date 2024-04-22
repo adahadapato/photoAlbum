@@ -186,6 +186,39 @@
                                     </ToolTip>
                                 </Button.ToolTip>
                             </Button>
+                            <Button x:Name="BtnPictFolder1"
+                                    Click="BtnPictFolder1_Click"
+                                    Content="Default Image Folder"
+                                    HorizontalContentAlignment="Left"
+                                    Style="{StaticResource MButtonStyle}">
+                                <Button.ToolTip>
+                                    <ToolTip Style="{StaticResource FancyToolTip}">
+                                        Click to select default image folder
+                                    </ToolTip>
+                                </Button.ToolTip>
+                            </Button>
+                            <Button x:Name="BtnPictFolder2"
+                                    Click="BtnPictFolder2_Click"
+                                    Content="Image Folder 2"
+                                    HorizontalContentAlignment="Left"
+                                    Style="{StaticResource MButtonStyle}">
+                                <Button.ToolTip>
+                                    <ToolTip Style="{StaticResource FancyToolTip}">
+                                        Click to select second image folder
+                                    </ToolTip>
+                                </Button.ToolTip>
+                            </Button>
+                            <Button x:Name="BtnPictFolder3"
+                                    Click="BtnPictFolder3_Click"
+                                    Content="Image Folder 3"
+                                    HorizontalContentAlignment="Left"
+                                    Style="{StaticResource MButtonStyle}">
+                                <Button.ToolTip>
+                                    <ToolTip Style="{StaticResource FancyToolTip}">
+                                        Click to select third image folder, if diferent from 1 and 2
+                                    </ToolTip>
+                                </Button.ToolTip>
+                            </Button>
                         </StackPanel>
                     </ScrollViewer>
                 </layoutToolkit:AccordionItem>
@@ -199,7 +232,7 @@
                     <TextBlock Foreground="#fff" Margin="10,7,0,10">
                         <Hyperlink NavigateUri="http://taraba.gotaxng.com/" 
                                Foreground="#fff"
-                               ToolTip="Visit Taraba gotax Web Portal"
+                               ToolTip="Visit Web Portal"
                                FontStyle="Italic"
                                FontSize="10">
                             Web Portal

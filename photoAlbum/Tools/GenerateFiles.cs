@@ -220,7 +220,7 @@ namespace photoAlbum.Tools
                     string sFile = string.Format($"{albumpath}\\{schnum}.alb");
 
                     File.WriteAllText(sFile, Json);
-
+                    await Task.Delay(1000);
                 }
                 return true;
             }
@@ -253,6 +253,17 @@ namespace photoAlbum.Tools
             {
                SafeGuiWpf.ShowError("Please select a valid Pictures Directory");
                 return;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(EntryPoint.PictureFilesFolder1))
+            {
+                EntryPoint.PictureFilesFolder1 = EntryPoint.PictureFilesFolder;
+            }
+
+            if (string.IsNullOrWhiteSpace(EntryPoint.PictureFilesFolder2))
+            {
+                EntryPoint.PictureFilesFolder2 = EntryPoint.PictureFilesFolder1;
             }
 
             string errfile = "";
@@ -441,7 +452,7 @@ namespace photoAlbum.Tools
 
                 File.WriteAllText(sFile, Json);
                 SafeGuiWpf.ShowSuccess($"Files generated for {schnum}");
-                //}
+                await Task.Delay(500);
             }
             catch (Exception ex)
             {

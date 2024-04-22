@@ -162,33 +162,35 @@ namespace photoAlbum.Tools
         {
                 var FileNames = (string.IsNullOrWhiteSpace(SchoolNo)) ? Directory.GetFiles(lastFolderName, "*.alb") : Directory.GetFiles(lastFolderName, $"{SchoolNo}*.alb");
 
-                foreach (string f in FileNames)
+            foreach (string f in FileNames)
+            {
+                //MessageBox.Show(f);
+                //string FolderName = string.Format($"{System.IO.Path.GetDirectoryName(f)}\\pdf");
+                var stateCode = System.IO.Path.GetFileNameWithoutExtension(f).Substring(0, 3);
+                string FolderName = string.Format($"{EntryPoint.DataBasePath}\\pdf\\{stateCode}_pdf");
+                if (!Directory.Exists(FolderName))
+                    Directory.CreateDirectory(FolderName);
+
+
+
+                var DestFileName = string.Format($"{FolderName}\\{System.IO.Path.GetFileNameWithoutExtension(f)}.pdf");
+                albumModel data;
+                using (FetchDataClass fd = new FetchDataClass())
                 {
-                    //MessageBox.Show(f);
-                    //string FolderName = string.Format($"{System.IO.Path.GetDirectoryName(f)}\\pdf");
-                    var stateCode = System.IO.Path.GetFileNameWithoutExtension(f).Substring(0, 3);
-                    string FolderName = string.Format($"{EntryPoint.DataBasePath}\\pdf\\{stateCode}_pdf");
-                    if (!Directory.Exists(FolderName))
-                        Directory.CreateDirectory(FolderName);
-
-
-
-                    var DestFileName = string.Format($"{FolderName}\\{System.IO.Path.GetFileNameWithoutExtension(f)}.pdf");
-                    albumModel data;
-                    using (FetchDataClass fd = new FetchDataClass())
-                    {
-                        data = await fd.FetchAlbum(f);
-                    }
-                    ReportData(data, DestFileName);
+                    data = await fd.FetchAlbum(f);
                 }
+                ReportData(data, DestFileName);
+
                 if (string.IsNullOrEmpty(SchoolNo))
                 {
                     SafeGuiWpf.ShowSuccess(string.Format($"Export Completed for {lastFolderName}"));
                 }
                 else
-                {
+                {   
                     SafeGuiWpf.ShowSuccess(string.Format($"Export Completed for {lastFolderName}\\{SchoolNo}"));
                 }
+                await Task.Delay(500);
+            }
         }
 
         static void ReportData(albumModel model, string fileName)

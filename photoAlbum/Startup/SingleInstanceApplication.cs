@@ -10,14 +10,14 @@ namespace photoAlbum
 {
     public class EntryPoint
     {
-        public static string DataBasePath = @"E:\works\photoAlbum\ssce2022";
+        public static string DataBasePath;// = @"c:\works\photoAlbum\ssce2023";
         public static string DestinationFilesPath;
-        public static string PictureFilesFolder = @"J:\ssce2022";
-        public static string PictureFilesFolder1 = @"J:\ssce2022_2";
-        public static string PictureFilesFolder2 = @"J:\ssce2022_3";
-        public const string ExaminationYear = "2022";
+        public static string PictureFilesFolder;// = @"e:\ssce2023";
+        public static string PictureFilesFolder1;// = @"e:\ssce2023_2";
+        public static string PictureFilesFolder2;// = @"e:\ssce2023_3";
+        public const string ExaminationYear = "2024";
         public const string Examination = "Internal";
-        public const string Null_passportPath = @"E:\works\photoAlbum\null_passport.jpg";
+        public const string Null_passportPath = @"c:\works\photoAlbum\null_passport.jpg";
         [STAThread]
         public static void Main()
         {
